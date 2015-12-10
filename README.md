@@ -55,24 +55,24 @@ Cookies allow us to store this information in the only other place available to 
 
 Let's see what [the spec][rfc_cookies] has to say:
 
-   This section outlines a way for an origin server to send state
-   information to a user agent and for the user agent to return the
-   state information to the origin server.
+      This section outlines a way for an origin server to send state
+      information to a user agent and for the user agent to return the
+      state information to the origin server.
 
-   To store state, the origin server includes a Set-Cookie header in an
-   HTTP response.  In subsequent requests, the user agent returns a
-   Cookie request header to the origin server.  The Cookie header
-   contains cookies the user agent received in previous Set-Cookie
-   headers.  The origin server is free to ignore the Cookie header or
-   use its contents for an application-defined purpose.
+      To store state, the origin server includes a Set-Cookie header in an
+      HTTP response.  In subsequent requests, the user agent returns a
+      Cookie request header to the origin server.  The Cookie header
+      contains cookies the user agent received in previous Set-Cookie
+      headers.  The origin server is free to ignore the Cookie header or
+      use its contents for an application-defined purpose.
 
 Their example is quite simple:
 
-   == Server -> User Agent ==
-   Set-Cookie: SID=31d4d96e407aad42
+== Server -> User Agent ==
+      Set-Cookie: SID=31d4d96e407aad42
 
-   == User Agent -> Server ==
-   Cookie: SID=31d4d96e407aad42
+      == User Agent -> Server ==
+      Cookie: SID=31d4d96e407aad42
 
 In this example, the server responds to a request with the `Set-Cookie` header. This header sets the value of the `SID` cookie to `31d4d96e407aad42`.
 
@@ -84,16 +84,16 @@ Cookies are stored in the browser. The browser doesn't care about what's in the 
 
 So how would we use a cookie to store a reference to the user's shopping cart? Let's say that we create a cart the first time a user adds something to their cart. Then, in the response, we might include the header,
 
-   == Server -> User Agent ==
-   Set-Cookie: cart_id=273
+      == Server -> User Agent ==
+      Set-Cookie: cart_id=273
 
 Only with the `cart.id` of the cart we just saved.
 
 When the user comes back to our site, their browser will include the cookie in their
 reply:
 
-   == User Agent -> Server ==
-   Cookie: cart_id=273
+      == User Agent -> Server ==
+      Cookie: cart_id=273
 
 We can look at this HTTP header, get the `cart_id` from it, and look it up using the `ActiveRecord` find method we know and love.
 
