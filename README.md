@@ -68,7 +68,7 @@ Let's see what [the spec][rfc_cookies] has to say:
 
 Their example is quite simple:
 
-== Server -> User Agent ==
+      == Server -> User Agent ==
       Set-Cookie: SID=31d4d96e407aad42
 
       == User Agent -> Server ==
