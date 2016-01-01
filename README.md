@@ -38,16 +38,16 @@ HTTP servers are typically stateless. Your Rails server has access to a database
 
 For example, `GET` requests usually encode this information in the path. When you write a route matching `/items/:item_id`, you are telling Rails to pull the value `id` from the request path and save it in `params[:id]`. In your `items_controller`, you'll probably have a method that looks something like:
 
-    def show
-      @item = Item.find!(params[:item_id])
-    end
+    ```def show
+      @item = Item.find(params[:item_id])
+    end```
 
 Which loads the row for that item from the database and returns it as an ActiveRecord model object, which your `show.html.erb` then renders.
 
 If we want to be able to retrieve the current cart, we need to its id to be somewhere in the HTTP request. Specifically, it must be in the path or the headers.
 
 It would be possible, though quite convoluted, to store this information in the path. This would have strange effects: since the path is shown in the browser's URL bar, a user who copies a URL and sends it to a friend ("check out this neat skirt!") would also be copying their shopping cart ID. Upon loading the page, the friend would
-see what's in the user's cart. That is probably not what we want.
+see what's in the user's cart. Since a cart is owned by a particular user, and may contain private information, this is probably not what we want.
 
 Cookies allow us to store this information in the only other place available to us: HTTP headers.
 
@@ -66,19 +66,19 @@ Let's see what [the spec][rfc_cookies] has to say:
       headers.  The origin server is free to ignore the Cookie header or
       use its contents for an application-defined purpose.
 
-Their example is quite simple:
+The description is quite technical, so let's look at their example:
 
-      == Server -> User Agent ==
+      ```== Server -> User Agent ==
       Set-Cookie: SID=31d4d96e407aad42
 
       == User Agent -> Server ==
-      Cookie: SID=31d4d96e407aad42
+      Cookie: SID=31d4d96e407aad42```
 
-In this example, the server responds to a request with the `Set-Cookie` header. This header sets the value of the `SID` cookie to `31d4d96e407aad42`.
+In this example, the server is an HTTP server, and the User Agent is a browser. The server responds to a request with the `Set-Cookie` header. This header sets the value of the `SID` cookie to `31d4d96e407aad42`.
 
-When the user visits another page on the same server, the browser sends the cookie back to the server, including the `Cookie: SID=31d4d96e407aad42` header in its request.
+Next, when the user visits another page on the same server, the browser sends the cookie back to the server, including the `Cookie: SID=31d4d96e407aad42` header in its request.
 
-Cookies are stored in the browser. The browser doesn't care about what's in the cookies you set. It just stores the data and sends it along on future requests to your server.
+Cookies are stored in the browser. The browser doesn't care about what's in the cookies you set. It just stores the data and sends it along on future requests to your server. You can think of them as a hash—and indeed, as we'll see later, Rails exposes cookies with a method that behaves much like a hash.
 
 ## Using cookies
 
@@ -111,15 +111,15 @@ This presents a problem for us. If users can edit their `cart_id` cookie, then t
 
 Fortunately, Rails has a solution to this. When you set cookies in Rails, you usually don't manipulate the HTTP headers directly. Instead, you use the `session` method. The `session` method is available anywhere in the Rails response cycle, and it behaves like a hash:
 
-    # set cart_id
-    session[:cart_id] = @cart.id
+      ```# set cart_id
+      session[:cart_id] = @cart.id
 
-    # load the cart referenced in the session
-    @cart = session[:cart_id]
+      # load the cart referenced in the session
+      @cart = session[:cart_id]```
 
 You can store any simple Ruby object in the session. In fact, we don't need a `Cart` model at all—we can just store a list of items in the session!
 
-Rails manages all session data in a single cookie, named `_YOUR_RAILS_APP_NAME_session`. It *serializes* your all the key/value pairs you set with `session`, turning them into a big string. Whenever you set a `key` with the `session` method, Rails updates the value of its session cookie to this big string.
+Rails manages all session data in a single cookie, named `_YOUR_RAILS_APP_NAME_session`. It *serializes* all the key/value pairs you set with `session`, converting them from a Ruby object into a big string. Whenever you set a `key` with the `session` method, Rails updates the value of its session cookie to this big string.
 
 When you set cookies this way, Rails signs them to prevent users from tampering with them. Your Rails server has a key, configured in `config/secrets.yml`.
 
@@ -128,11 +128,11 @@ When you set cookies this way, Rails signs them to prevent users from tampering 
 
 Somewhere else, Rails has a method, let's call it `sign`, which takes a `message` and a `key` and returns a `signature`, which is just a string:
 
-    # sign(message: string, key: string) -> signature: string
+    ```# sign(message: string, key: string) -> signature: string
     def sign(message, key):
       # cryptographic magic here
       return signature
-    end
+    end```
 
 It's guaranteed that given the same message and key, sign will produce output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
 
@@ -187,11 +187,6 @@ This way, we can use `current_cart` in our views and layouts too. For example, w
 
 Cookies are foundational for the modern web.
 
-You've probably heard a lot about cookies from non-technical sources. In fact, the EU recently passed a law requiring sites that use cookies to request user consent before doing so.
-
-The effect of this law was not unlike the effect of California's [Proposition 65][prop_65], which states that buildings must have clear signage if they contain any one of a list of chemicals known to the state of California to cause cancer.
-Nobody knows or wants to put in the considerable expense to figure out what's in their building, and signs are basically free, so literally every building in California now carries a prominent sign telling you it causes cancer.
-
 Most sites use cookies, either to let their users log in, or to keep track of their
 shopping carts, or record other ephemeral session data. Almost nobody thinks these are bad uses of cookies: nobody really believes that you should have to type in your username and password on every page, or that your shopping cart should clear if you reload the page.
 
@@ -210,10 +205,8 @@ Cookies, like any technology, are a tool. In the rest of this unit, we're going 
   * [HTTP RFC Section 9 — Methods][rfc_http_methods]
   * [RFC 6265 — HTTP State Management Mechanism (the cookie spec)][rfc_cookies]
   * [Rails – Accessing the Session][rails_session]
-  * [California Prop 65][prop_65]
 
 [rfc_http_methods]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html "HTTP RFC 9 — Method Definitions"
 [rfc_cookies]: http://tools.ietf.org/html/rfc6265 "HTTP State Management Mechanism"
 [edit_this_cookie]: https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=en
 [rails_session]: http://guides.rubyonrails.org/action_controller_overview.html#accessing-the-session
-[prop_65]: http://oehha.ca.gov/prop65/background/p65plain.html

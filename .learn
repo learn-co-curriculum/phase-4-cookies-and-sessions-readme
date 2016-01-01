@@ -1,0 +1,10 @@
+tags:
+  - cookie
+  - session
+  - http
+  - rfc 6265
+languages:
+  - Ruby
+resources:
+  - http://tools.ietf.org/html/rfc6265
+  - http://guides.rubyonrails.org/action_controller_overview.html#accessing-the-session
