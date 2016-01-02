@@ -38,9 +38,11 @@ HTTP servers are typically stateless. Your Rails server has access to a database
 
 For example, `GET` requests usually encode this information in the path. When you write a route matching `/items/:item_id`, you are telling Rails to pull the value `id` from the request path and save it in `params[:id]`. In your `items_controller`, you'll probably have a method that looks something like:
 
-    ```def show
-      @item = Item.find(params[:item_id])
-    end```
+```
+def show
+  @item = Item.find(params[:item_id])
+end
+```
 
 Which loads the row for that item from the database and returns it as an ActiveRecord model object, which your `show.html.erb` then renders.
 
@@ -68,11 +70,11 @@ Let's see what [the spec][rfc_cookies] has to say:
 
 The description is quite technical, so let's look at their example:
 
-      ```== Server -> User Agent ==
+      == Server -> User Agent ==
       Set-Cookie: SID=31d4d96e407aad42
 
       == User Agent -> Server ==
-      Cookie: SID=31d4d96e407aad42```
+      Cookie: SID=31d4d96e407aad42
 
 In this example, the server is an HTTP server, and the User Agent is a browser. The server responds to a request with the `Set-Cookie` header. This header sets the value of the `SID` cookie to `31d4d96e407aad42`.
 
@@ -111,11 +113,11 @@ This presents a problem for us. If users can edit their `cart_id` cookie, then t
 
 Fortunately, Rails has a solution to this. When you set cookies in Rails, you usually don't manipulate the HTTP headers directly. Instead, you use the `session` method. The `session` method is available anywhere in the Rails response cycle, and it behaves like a hash:
 
-      ```# set cart_id
+      # set cart_id
       session[:cart_id] = @cart.id
 
       # load the cart referenced in the session
-      @cart = session[:cart_id]```
+      @cart = session[:cart_id]
 
 You can store any simple Ruby object in the session. In fact, we don't need a `Cart` model at all—we can just store a list of items in the session!
 
@@ -128,11 +130,11 @@ When you set cookies this way, Rails signs them to prevent users from tampering 
 
 Somewhere else, Rails has a method, let's call it `sign`, which takes a `message` and a `key` and returns a `signature`, which is just a string:
 
-    ```# sign(message: string, key: string) -> signature: string
+    # sign(message: string, key: string) -> signature: string
     def sign(message, key):
       # cryptographic magic here
       return signature
-    end```
+    end
 
 It's guaranteed that given the same message and key, sign will produce output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
 
@@ -141,6 +143,8 @@ Rails creates a signature for every cookie it sets, and appends the signature to
 When it receives a cookie, Rails verifies that the signature matches the content (that is, that `sign(cookie_body, secret_key_base) == cookie_signature`).
 
 This prevents cookie tampering. If a user tries to edit their cookie and change the `cart_id`, they signature won't match, and Rails will silently ignore the cookie and set a new one.
+
+Cryptography is a deep rabbit hole. At this point, you don't need to worry about the specifics of how cryptography works, just that Rails and other frameworks use it to ensure that session data which is set on the server can't be edited by users.
 
 # Tying it together
 
