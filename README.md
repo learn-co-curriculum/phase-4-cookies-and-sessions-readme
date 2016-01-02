@@ -113,11 +113,13 @@ This presents a problem for us. If users can edit their `cart_id` cookie, then t
 
 Fortunately, Rails has a solution to this. When you set cookies in Rails, you usually don't manipulate the HTTP headers directly. Instead, you use the `session` method. The `session` method is available anywhere in the Rails response cycle, and it behaves like a hash:
 
-      # set cart_id
-      session[:cart_id] = @cart.id
+```
+  # set cart_id
+  session[:cart_id] = @cart.id
 
-      # load the cart referenced in the session
-      @cart = session[:cart_id]
+  # load the cart referenced in the session
+  @cart = session[:cart_id]
+```
 
 You can store any simple Ruby object in the session. In fact, we don't need a `Cart` model at all—we can just store a list of items in the session!
 
@@ -125,16 +127,20 @@ Rails manages all session data in a single cookie, named `_YOUR_RAILS_APP_NAME_s
 
 When you set cookies this way, Rails signs them to prevent users from tampering with them. Your Rails server has a key, configured in `config/secrets.yml`.
 
-    development:
-      secret_key_base: kaleisgreat  # probably not the most secure key ever
+```
+development:
+  secret_key_base: kaleisgreat  # probably not the most secure key ever
+```
 
 Somewhere else, Rails has a method, let's call it `sign`, which takes a `message` and a `key` and returns a `signature`, which is just a string:
 
-    # sign(message: string, key: string) -> signature: string
-    def sign(message, key):
-      # cryptographic magic here
-      return signature
-    end
+```
+# sign(message: string, key: string) -> signature: string
+def sign(message, key):
+  # cryptographic magic here
+  return signature
+end
+```
 
 It's guaranteed that given the same message and key, sign will produce output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
 
@@ -151,39 +157,45 @@ Cryptography is a deep rabbit hole. At this point, you don't need to worry about
 In our `items_controller.rb`, we might have an `add_to_cart` method, which is called
 when the user adds something to their cart. It might work something like this:
 
-    # Routed from POST /items/:id/add_to_cart
-    def add_to_cart
-      # Get the item from the path
-      @item = Item.find(params[:id])
-      
-      # Load the cart from the session, or create a new empty cart.
-      cart = session[:cart] || []
-      cart << @item.id
+```
+# Routed from POST /items/:id/add_to_cart
+def add_to_cart
+  # Get the item from the path
+  @item = Item.find(params[:id])
+  
+  # Load the cart from the session, or create a new empty cart.
+  cart = session[:cart] || []
+  cart << @item.id
 
-      # Save the cart in the session.
-      session[:cart] = cart
-    end
+  # Save the cart in the session.
+  session[:cart] = cart
+end
+```
 
 That's it! It's common to wrap this up in a helper method:
 
 It's common to wrap up some of this functionality in a helper method:
 
-    class ApplicationController < ActionController::Base
-      def current_cart
-        session[:cart] ||= []
-      end
-    end
+```
+class ApplicationController < ActionController::Base
+  def current_cart
+    session[:cart] ||= []
+  end
+end
+```
 
 So now our controller looks like this:
 
-    # Routed from POST /items/:id/add_to_cart
-    def add_to_cart
-      # Get the item from the path
-      @item = Item.find(params[:id])
-      
-      # Load the cart from the session, or create a new empty cart.
-      current_cart << @item.id
-    end
+```
+# Routed from POST /items/:id/add_to_cart
+def add_to_cart
+  # Get the item from the path
+  @item = Item.find(params[:id])
+  
+  # Load the cart from the session, or create a new empty cart.
+  current_cart << @item.id
+end
+```
 
 This way, we can use `current_cart` in our views and layouts too. For example, we may want to show the user how many items are in their cart as part of the layout.
 
