@@ -204,7 +204,7 @@ Cookies are foundational for the modern web.
 Most sites use cookies, either to let their users log in, or to keep track of their
 shopping carts, or record other ephemeral session data. Almost nobody thinks these are bad uses of cookies: nobody really believes that you should have to type in your username and password on every page, or that your shopping cart should clear if you reload the page.
 
-But cookies just let you store data on in a user's browser, so by nature, they can be used for more controversial endeavors. 
+But cookies just let you store data in a user's browser, so by nature, they can be used for more controversial endeavors. 
 
 For example, Google AdWords sets a cookie and uses that cookie to track what ads you've seen and which ones you've clicked on. The tracking information helps AdWords decide what ads to show you.
 
