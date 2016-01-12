@@ -10,7 +10,7 @@ Primarily, cookies are used for log in. They provide a way for us to verify who 
 
 Cookies may also be used to store other information about a user, such as what's in their shopping cart, or what ads you've shown them during their visit.
 
-In this document, we'll cover what cookies are, how they fit into the HTTP response flow, and how you can access them from Rails.
+In this document, we'll cover what cookies are, how they fit into the HTTP response flow, and how you can access them within your Rails application.
 
 ## Objectives
   1. Describe a cookie.
