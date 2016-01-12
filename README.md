@@ -23,7 +23,7 @@ In this document, we'll cover what cookies are, how they fit into the HTTP respo
 
 ## Shopping
 
-Let's say we want to write an e-commerce site. Users can come to the site, add some items to their shopping cart, and then pay for all of them at the end. Simple.
+Let's say we want to build an e-commerce site. Users can come to the site, add some items to their shopping cart, and then pay for all of them at the end. Simple.
 
 Where does the user's shopping cart live?
 
