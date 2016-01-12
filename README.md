@@ -174,8 +174,6 @@ end
 
 That's it! It's common to wrap this up in a helper method:
 
-It's common to wrap up some of this functionality in a helper method:
-
 ```ruby
 class ApplicationController < ActionController::Base
   def current_cart
