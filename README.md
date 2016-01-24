@@ -27,14 +27,21 @@ Let's say we want to build an e-commerce site. Users can come to the site, add s
 
 Where does the user's shopping cart live?
 
-We could create a `Cart` model, which `has_and_belongs_to_many` `Item`s. But that leaves a fundamental problem: how do we know what cart to load when we get a request?
+We could create a `Cart` model, which [`has_and_belongs_to_many`][habtm] `Item`s. But that leaves a fundamental problem: how do we know what cart to load when we get a request? When one user requests to see their cart, how can I tell them apart from another user, and make sure they're seeing the right cart?
+
+The flow looks like this:
+
+  * When a user adds something to their cart, their browser will make a `POST` request to `/cart`.
+  * Later, to see the content of their cart, they'll send a `GET` request to `/cart`. 
+
+
 
 Remember what's included in an HTTP request:
   * an [HTTP verb][rfc_http_methods], like `GET`, `PUT`, or `POST`
   * a path
   * various headers
 
-HTTP servers are typically stateless. Your Rails server has access to a database, but the request needs to have information about what database rows to look up.
+HTTP servers are typically stateless. They receive requests, process them, return data, then forget about them.
 
 For example, `GET` requests usually encode this information in the path. When you write a route matching `/items/:item_id`, you are telling Rails to pull the value `id` from the request path and save it in `params[:id]`. In your `items_controller`, you'll probably have a method that looks something like:
 
@@ -210,7 +217,7 @@ For example, Google AdWords sets a cookie and uses that cookie to track what ads
 
 This is why, if you click on an ad, you may find that the ad follows you around the Internet. It turns out that this behavior is as effective as it is annoying: people are far more likely to buy things from ads that they've clicked on once.
 
-This use of cookies worries people. And so now the EU has a law.
+This use of cookies worries people. And so now the EU [has a law][eu_law].
 
 Cookies, like any technology, are a tool. In the rest of this unit, we're going to be using them to let users log in. Whether you later want to use them in such a way that the EU passes another law is up to you.
 
@@ -219,8 +226,12 @@ Cookies, like any technology, are a tool. In the rest of this unit, we're going 
   * [HTTP RFC Section 9 — Methods][rfc_http_methods]
   * [RFC 6265 — HTTP State Management Mechanism (the cookie spec)][rfc_cookies]
   * [Rails – Accessing the Session][rails_session]
+  * [Has and belongs to many][habtm]
+  * [EU Cookie Directive][eu_law]
 
 [rfc_http_methods]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html "HTTP RFC 9 — Method Definitions"
 [rfc_cookies]: http://tools.ietf.org/html/rfc6265 "HTTP State Management Mechanism"
 [edit_this_cookie]: https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=en
 [rails_session]: http://guides.rubyonrails.org/action_controller_overview.html#accessing-the-session
+[habtm]: http://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association
+[eu_law]: https://en.wikipedia.org/wiki/HTTP_cookie#EU_cookie_directive
