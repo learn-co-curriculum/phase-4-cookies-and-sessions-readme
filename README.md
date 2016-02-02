@@ -1,5 +1,14 @@
 # Cookies and sessions
 
+## Objectives
+  1. Describe a cookie.
+  2. Explain the data flow problem cookies solve.
+  3. Find all the cookies on a page.
+  4. Explain what a session is, as far as Rails is concerned.
+  5. Describe where session data is stored.
+  6. Write data to the Rails session and access it later
+     in the app.
+
 ## Overview
 
 Cookies are a way for an HTTP server to ask the user's browser to store a little bit of data for it, and then get that data back from the browser later.
@@ -11,15 +20,6 @@ Primarily, cookies are used for log in. They provide a way for us to verify who 
 Cookies may also be used to store other information about a user, such as what's in their shopping cart, or what ads you've shown them during their visit.
 
 In this document, we'll cover what cookies are, how they fit into the HTTP response flow, and how you can access them within your Rails application.
-
-## Objectives
-  1. Describe a cookie.
-  2. Explain the data flow problem cookies solve.
-  3. Find all the cookies on a page.
-  4. Explain what a session is, as far as Rails is concerned.
-  5. Describe where session data is stored.
-  6. Write data to the Rails session and access it later
-     in the app.
 
 ## Shopping
 
@@ -53,7 +53,7 @@ end
 
 Which loads the row for that item from the database and returns it as an ActiveRecord model object, which your `show.html.erb` then renders.
 
-If we want to be able to retrieve the current cart, we need to its id to be somewhere in the HTTP request. Specifically, it must be in the path or the headers.
+If we want to be able to retrieve the current cart, we need to have its id somewhere in the HTTP request. Specifically, it must be in the path or the headers.
 
 It would be possible, though quite convoluted, to store this information in the path. This would have strange effects: since the path is shown in the browser's URL bar, a user who copies a URL and sends it to a friend ("check out this neat skirt!") would also be copying their shopping cart ID. Upon loading the page, the friend would
 see what's in the user's cart. Since a cart is owned by a particular user, and may contain private information, this is probably not what we want.
@@ -112,7 +112,7 @@ Cookies are stored as plain text in a user's browser. Therefore, the user can se
 
 If you open the developer console in your browser, you can see the cookies set by the current site. In Chrome's console, you can find this under `Resources > Cookies`. You can delete any cookie you like. For example, if you delete your `user_session` cookie on `github.com`, you will find that you've been logged out.
 
-You can also edit cookies, for example with [this extension|edit_this_cookie].
+You can also edit cookies, for example with [edit_this_cookie].
 
 This presents a problem for us. If users can edit their `cart_id` cookie, then they can see other users' shopping carts.
 
@@ -208,7 +208,7 @@ This way, we can use `current_cart` in our views and layouts too. For example, w
 
 Cookies are foundational for the modern web.
 
-Most sites use cookies, either to let their users log in, or to keep track of their
+Most sites use cookies, either to let their users log in, to keep track of their
 shopping carts, or record other ephemeral session data. Almost nobody thinks these are bad uses of cookies: nobody really believes that you should have to type in your username and password on every page, or that your shopping cart should clear if you reload the page.
 
 But cookies just let you store data in a user's browser, so by nature, they can be used for more controversial endeavors. 
@@ -217,7 +217,7 @@ For example, Google AdWords sets a cookie and uses that cookie to track what ads
 
 This is why, if you click on an ad, you may find that the ad follows you around the Internet. It turns out that this behavior is as effective as it is annoying: people are far more likely to buy things from ads that they've clicked on once.
 
-This use of cookies worries people. And so now the EU [has a law][eu_law].
+This use of cookies worries people and the EU has created legislation around the use of cookies[has a law][eu_law].
 
 Cookies, like any technology, are a tool. In the rest of this unit, we're going to be using them to let users log in. Whether you later want to use them in such a way that the EU passes another law is up to you.
 
