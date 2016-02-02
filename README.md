@@ -112,7 +112,7 @@ Cookies are stored as plain text in a user's browser. Therefore, the user can se
 
 If you open the developer console in your browser, you can see the cookies set by the current site. In Chrome's console, you can find this under `Resources > Cookies`. You can delete any cookie you like. For example, if you delete your `user_session` cookie on `github.com`, you will find that you've been logged out.
 
-You can also edit cookies, for example with [edit_this_cookie].
+You can also edit cookies, for example with [this extension][edit_this_cookie].
 
 This presents a problem for us. If users can edit their `cart_id` cookie, then they can see other users' shopping carts.
 
@@ -217,7 +217,7 @@ For example, Google AdWords sets a cookie and uses that cookie to track what ads
 
 This is why, if you click on an ad, you may find that the ad follows you around the Internet. It turns out that this behavior is as effective as it is annoying: people are far more likely to buy things from ads that they've clicked on once.
 
-This use of cookies worries people and the EU has created legislation around the use of cookies[has a law][eu_law].
+This use of cookies worries people and the EU [has created legislation around the use of cookies][eu_law].
 
 Cookies, like any technology, are a tool. In the rest of this unit, we're going to be using them to let users log in. Whether you later want to use them in such a way that the EU passes another law is up to you.
 
