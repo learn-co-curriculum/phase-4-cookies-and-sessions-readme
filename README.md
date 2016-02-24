@@ -155,7 +155,7 @@ Rails creates a signature for every cookie it sets, and appends the signature to
 
 When it receives a cookie, Rails verifies that the signature matches the content (that is, that `sign(cookie_body, secret_key_base) == cookie_signature`).
 
-This prevents cookie tampering. If a user tries to edit their cookie and change the `cart_id`, they signature won't match, and Rails will silently ignore the cookie and set a new one.
+This prevents cookie tampering. If a user tries to edit their cookie and change the `cart_id`, the signature won't match, and Rails will silently ignore the cookie and set a new one.
 
 Cryptography is a deep rabbit hole. At this point, you don't need to worry about the specifics of how cryptography works, just that Rails and other frameworks use it to ensure that session data which is set on the server can't be edited by users.
 
@@ -235,3 +235,4 @@ Cookies, like any technology, are a tool. In the rest of this unit, we're going 
 [rails_session]: http://guides.rubyonrails.org/action_controller_overview.html#accessing-the-session
 [habtm]: http://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association
 [eu_law]: https://en.wikipedia.org/wiki/HTTP_cookie#EU_cookie_directive
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/cookies_and_sessions_readme'>Cookies And Sessions </a> on Learn.co and start learning to code for free.</p>
