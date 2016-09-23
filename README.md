@@ -181,6 +181,8 @@ That's it! It's common to wrap this up in a helper method:
 
 ```ruby
 class ApplicationController < ActionController::Base
+  helper_method :current_cart
+  
   def current_cart
     session[:cart] ||= []
   end
