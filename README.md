@@ -147,7 +147,7 @@ def sign(message, key):
 end
 ```
 
-It's guaranteed that given the same message and key, sign will produce output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
+It's guaranteed that given the same message and key, sign will produce the same output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
 
 Rails creates a signature for every cookie it sets, and appends the signature to the cookie.
 
