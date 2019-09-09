@@ -108,7 +108,7 @@ We can look at this HTTP header, get the `cart_id` from it, and look it up using
 
 Cookies are stored as plain text in a user's browser. Therefore, the user can see what's in them, and they can set them to anything they want.
 
-If you open the developer console in your browser, you can see the cookies set by the current site. In Chrome's console, you can find this under `Resources > Cookies`. You can delete any cookie you like. For example, if you delete your `user_session` cookie on `github.com`, you will find that you've been logged out.
+If you open the developer console in your browser, you can see the cookies set by the current site. In Chrome's console, you can find this under `Application > Cookies`. You can delete any cookie you like. For example, if you delete your `user_session` cookie on `github.com`, you will find that you've been logged out.
 
 You can also edit cookies, for example with [this extension][edit_this_cookie].
 
