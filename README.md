@@ -199,6 +199,9 @@ def add_to_cart
   
   # Load the cart from the session, or create a new empty cart.
   current_cart << @item.id
+  
+  # Save the cart in the session.
+  session[:cart] = cart
 end
 ```
 
