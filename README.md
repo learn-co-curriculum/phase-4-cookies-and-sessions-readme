@@ -43,11 +43,11 @@ Remember what's included in an HTTP request:
 
 HTTP servers are typically stateless. They receive requests, process them, return data, then forget about them.
 
-For example, `GET` requests usually encode this information in the path. When you write a route matching `/items/:item_id`, you are telling Rails to pull the value `id` from the request path and save it in `params[:id]`. In your `items_controller`, you'll probably have a method that looks something like:
+For example, `GET` requests usually encode this information in the path. When you write a route matching `/items/:id`, you are telling Rails to pull the value `id` from the request path and save it in `params[:id]`. In your `items_controller`, you'll probably have a method that looks something like:
 
 ```ruby
 def show
-  @item = Item.find(params[:item_id])
+  @item = Item.find(params[:id])
 end
 ```
 
@@ -123,7 +123,7 @@ Fortunately, Rails has a solution to this. When you set cookies in Rails, you us
   session[:cart_id] = @cart.id
 
   # load the cart referenced in the session
-  @cart = session[:cart_id]
+  @cart = Cart.find(session[:cart_id])
 ```
 
 You can store any simple Ruby object in the session. In fact, we don't need a `Cart` model at all—we can just store a list of items in the session!
@@ -147,7 +147,7 @@ def sign(message, key):
 end
 ```
 
-It's guaranteed that given the same message and key, sign will produce the same output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
+It's guaranteed that given the same message and key, `sign` will produce the same output. Also, without the key, it is practically impossible to know what `sign` would return for a given message. That is, signatures can't be forged.
 
 Rails creates a signature for every cookie it sets, and appends the signature to the cookie.
 
@@ -199,9 +199,6 @@ def add_to_cart
   
   # Load the cart from the session, or create a new empty cart.
   current_cart << @item.id
-  
-  # Save the cart in the session.
-  session[:cart] = cart
 end
 ```
 
