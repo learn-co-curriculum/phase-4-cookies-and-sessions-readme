@@ -234,4 +234,3 @@ Cookies, like any technology, are a tool. In the rest of this unit, we're going 
 [rails_session]: http://guides.rubyonrails.org/action_controller_overview.html#accessing-the-session
 [habtm]: http://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association
 [eu_law]: https://en.wikipedia.org/wiki/HTTP_cookie#EU_cookie_directive
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/cookies_and_sessions_readme'>Cookies And Sessions </a> on Learn.co and start learning to code for free.</p>
