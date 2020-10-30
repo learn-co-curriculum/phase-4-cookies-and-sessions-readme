@@ -157,7 +157,7 @@ This prevents cookie tampering. If a user tries to edit their cookie and change 
 
 Cryptography is a deep rabbit hole. At this point, you don't need to worry about the specifics of how cryptography works, just that Rails and other frameworks use it to ensure that session data which is set on the server can't be edited by users.
 
-# Tying it together
+## Tying it together
 
 In our `items_controller.rb`, we might have an `add_to_cart` method, which is called
 when the user adds something to their cart. It might work something like this:
