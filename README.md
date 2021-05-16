@@ -6,20 +6,27 @@
 - Identify how cookies are part of the request/response cycle
 - Explain what a session is in Rails
 
-## Overview
+## Introduction
 
-Cookies are a way for an HTTP server to ask the user's browser to store a little
-bit of data for it, and then get that data back from the browser later.
+Cookies are small pieces of information that are sent from the server to the
+client. They are then stored on the client (in the browser) and sent back to the
+server with each subsequent request.
 
-They are fundamental to the operation of nearly every contemporary website.
+HTTP is a **stateless** protocol, since the server doesn't maintain information
+about each client for all requests. Cookies help make **stateful** HTTP requests
+by providing a mechanism for sending additional information to the server with
+each request.
 
-Primarily, cookies are used for log in. They provide a way for us to verify who
+Cookies are _domain-specific_. The browser stores cookies for each domain (e.g.
+`nytimes.com`) separately, and only cookies for that domain are sent back to
+the server with subsequent requests.
+
+Cookies are typically use to store session information (user login/shopping
+cart/etc), personalization (user preferences/themes/etc) and tracking
+information (analyzing user behavior). They provide a way for us to verify who
 a user is once, and then remember it for their entire session. Without cookies,
 you would have to provide your username and password on every single request to
 the server.
-
-Cookies may also be used to store other information about a user, such as what's
-in their shopping cart, or what ads you've shown them during their visit.
 
 In this document, we'll cover what cookies are, how they fit into the HTTP
 request/response cycle, and how you can access them within your Rails
@@ -80,7 +87,7 @@ this number in the request and circumvent our paywall:
 Cookies allow us to store this information in the only other place available to
 us: HTTP headers.
 
-## What's a cookie, anyway?
+## What's a Cookie, Anyway?
 
 Let's see what [the spec][rfc_cookies] has to say:
 
@@ -144,7 +151,7 @@ write some conditional logic to customize the response based on the
 `pageviews_remaining` to either return the article, or return a message
 indicating that our frontend should show the paywall.
 
-## Security concerns
+## Security Concerns
 
 Cookies are stored as plain text in a user's browser. Therefore, the user can
 see what's in them, and they can set them to anything they want.
