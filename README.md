@@ -189,7 +189,7 @@ When you set cookies this way, Rails **signs** them to prevent users from
 tampering with them. Your Rails server has a key, configured in
 `config/credentials.yml.enc`.
 
-```
+```txt
 development:
   secret_key_base: kaleisgreat  # probably not the most secure key ever
 ```
