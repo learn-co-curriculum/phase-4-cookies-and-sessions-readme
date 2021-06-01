@@ -21,8 +21,8 @@ Cookies are _domain-specific_. The browser stores cookies for each domain (e.g.
 `nytimes.com`) separately, and only cookies for that domain are sent back to
 the server with subsequent requests.
 
-Cookies are typically use to store session information (user login/shopping
-cart/etc), personalization (user preferences/themes/etc) and tracking
+Cookies are typically used to store session information (user login ,shopping
+cart, etc.), personalization (user preferences, themes, etc.) and tracking
 information (analyzing user behavior). They provide a way for us to verify who
 a user is once, and then remember it for their entire session. Without cookies,
 you would have to provide your username and password on every single request to
@@ -56,11 +56,12 @@ Remember what's included in an HTTP request:
   request)
 
 HTTP servers are typically stateless. They receive requests, process them,
-return data, then forget about them.
+return data, then forget about them. This means that all required information
+must be passed with the request, either in the path or in the headers.
 
-For example, `GET` requests usually encode this information in the path. When
-you write a route matching `/articles/:id`, you are telling Rails to pull the value
-`id` from the request path and save it in `params[:id]`. In your
+For example, `GET` requests usually encode the necessary information in the
+path. When you write a route matching `/articles/:id`, you are telling Rails to
+pull the value `id` from the request path and save it in `params[:id]`. In your
 `articles_controller`, you'll probably have a method that looks something like:
 
 ```ruby
@@ -70,22 +71,22 @@ def show
 end
 ```
 
-Which loads the row for that article from the database and returns it as an
+This code loads the row for that article from the database and returns it as an
 Active Record model object, which is then serialized as JSON.
 
-If we want to be able to keep track of page views, that number must be part of
-the request. Specifically, it must be in the path or the headers.
+If we want to be able to keep track of page views, we need to figure out how to
+include that information in the request, either in the path or the headers.
 
 It would be possible, though quite convoluted, to store this information in the
 path. Our JavaScript application could keep track of the articles the user has
-viewed, and include them as an additional query parameter in the request:
-`/articles/3?pageviews_remaining=5`. However, there are a few flaws to this
-approach: most obviously, it would be incredible simple for the user to change
-this number in the request and circumvent our paywall:
+viewed, and include the remaining page views as an additional query parameter in
+the request: `/articles/3?pageviews_remaining=5`. However, there are a few flaws
+to this approach: most obviously, it would be incredibly simple for the user to
+change this number in the request and circumvent our paywall:
 `/articles/3?pageviews_remaining=999`.
 
-Cookies allow us to store this information in the only other place available to
-us: HTTP headers.
+Luckily, cookies allow us to store this information in the only other place
+available to us: HTTP headers.
 
 ## What's a Cookie, Anyway?
 
@@ -124,8 +125,8 @@ header in its request.
 
 Cookies are stored in the browser. The browser doesn't care about what's in the
 cookies you set. It just stores the data and sends it along on future requests
-to your server. You can think of them as a hash—and indeed, as we'll see later,
-Rails exposes cookies with a method that behaves much like a hash.
+to your server. You can think of them as a hash — and indeed, as we'll see
+later, Rails exposes cookies with a method that behaves much like a hash.
 
 ## Using Cookies
 
@@ -219,7 +220,7 @@ This prevents cookie tampering. If a user tries to edit their cookie and change
 the `pageviews_remaining`, the signature won't match, and Rails will silently
 ignore the cookie and set a new one.
 
-Cryptography is a deep rabbit hole. At this point, you don't need to worry about
+Cryptography is a deep rabbit hole. At this point, you don't need to understand
 the specifics of how cryptography works, just that Rails and other frameworks
 use it to ensure that session data which is set on the server can't be edited by
 users.
@@ -228,14 +229,14 @@ users.
 
 Cookies are foundational for the modern web.
 
-Most sites use cookies, either to let their users log in, to keep track of their
-shopping carts, or record other ephemeral session data. Almost nobody thinks
-these are bad uses of cookies: nobody really believes that you should have to
-type in your username and password on every page, or that your shopping cart
-should clear if you reload the page.
+Most sites use cookies, to let their users log in, keep track of their shopping
+carts, or record other ephemeral session data. Almost nobody thinks these are
+bad uses of cookies: nobody really believes that you should have to type in your
+username and password on every page, or that your shopping cart should clear if
+you reload the page.
 
-But cookies just let you store data in a user's browser, so by nature, they can
-be used for more controversial endeavors.
+But cookies let you store data in a user's browser, so by nature, they can be
+used for more controversial endeavors.
 
 For example, Google AdWords sets a cookie and uses that cookie to track what ads
 you've seen and which ones you've clicked on. The tracking information helps
