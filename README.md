@@ -21,7 +21,7 @@ Cookies are _domain-specific_. The browser stores cookies for each domain (e.g.
 `nytimes.com`) separately, and only cookies for that domain are sent back to
 the server with subsequent requests.
 
-Cookies are typically used to store session information (user login ,shopping
+Cookies are typically used to store session information (user login, shopping
 cart, etc.), personalization (user preferences, themes, etc.) and tracking
 information (analyzing user behavior). They provide a way for us to verify who
 a user is once, and then remember it for their entire session. Without cookies,
@@ -72,10 +72,13 @@ end
 ```
 
 This code loads the row for that article from the database and returns it as an
-Active Record model object, which is then serialized as JSON.
+Active Record model object, which is then serialized as JSON. All the
+information needed for the `GET` request — in this case, the `id` of the article
+to render — is included in the path.
 
-If we want to be able to keep track of page views, we need to figure out how to
-include that information in the request, either in the path or the headers.
+Similarly, if we want to be able to keep track of page views, we need to figure
+out how to include that information in the request, either in the path or the
+headers.
 
 It would be possible, though quite convoluted, to store this information in the
 path. Our JavaScript application could keep track of the articles the user has
