@@ -256,6 +256,14 @@ Cookies, like any technology, are a tool. In the rest of this module, we're goin
 to be using them to let users log in. Whether you later want to use them in such
 a way that the EU passes another law is up to you.
 
+## Check For Understanding
+
+Before you move on, make sure you can answer the following questions:
+
+1. What do we mean when we say that HTTP is stateless?
+2. What Rails method can you use to protect cookies from being tampered with by
+   users? What two things does Rails do to secure the cookie?
+
 ## Resources
 
 - [HTTP RFC Section 9 — Methods][http methods rfc]
