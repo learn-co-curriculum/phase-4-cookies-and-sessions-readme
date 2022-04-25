@@ -270,9 +270,11 @@ Before you move on, make sure you can answer the following questions:
 - [RFC 6265 — HTTP State Management Mechanism (the cookie spec)][rfc_cookies]
 - [Rails Sessions][rails_session]
 - [General Data Protection Regulation][eu_law]
+- [Legal Cookie Requirements][cookie policies]
 
 [http methods rfc]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html "HTTP RFC 9 — Method Definitions"
 [rfc_cookies]: http://tools.ietf.org/html/rfc6265 "HTTP State Management Mechanism"
 [edit_this_cookie]: https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=en
 [rails_session]: https://guides.rubyonrails.org/action_controller_overview.html#session
 [eu_law]: https://en.wikipedia.org/wiki/General_Data_Protection_Regulation
+[cookie policies]: https://termly.io/resources/templates/cookie-policy-template/#are-you-legally-required-to-have-a-cookie-policy
